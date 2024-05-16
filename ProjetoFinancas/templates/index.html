@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculadora de Investimentos</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>Calculadora de Juros</h1>
+    <input type="number" id="principal" placeholder="Principal">
+    <input type="number" id="taxa_de_juros" placeholder="Taxa de Juros (%)">
+    <input type="number" id="tempo" placeholder="Tempo (anos)">
+    <button onclick="calcular()">Calcular</button>
+    <canvas id="myChart"></canvas>
+
+    <script>
+        function calcular() {
+            var principal = document.getElementById('principal').value;
+            var taxa_de_juros = document.getElementById('taxa_de_juros').value;
+            var tempo = document.getElementById('tempo').value;
+
+            fetch('/calcular', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({principal: principal, taxa_de_juros: taxa_de_juros, tempo: tempo})
+            })
+            .then(response => response.json())
+            .then(data => {
+                var ctx = document.getElementById('myChart').getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: Array.from({length: tempo + 1}, (_, i) => i),
+                        datasets: [{
+                            label: 'Juros Simples',
+                            data: data.simples,
+                            borderColor: 'red',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Juros Compostos',
+                            data: data.compostos,
+                            borderColor: 'blue',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            });
+        }
+    </script>
+</body>
+</html>
