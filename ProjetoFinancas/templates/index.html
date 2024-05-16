@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Investment Calculator</title>
+  </head>
+  <body>
+    <h1>Investment Calculator</h1>
+    <form action="" method="post">
+      <label for="principal">Principal:</label>
+      <input type="number" id="principal" name="principal" required><br><br>
+      <label for="rate">Rate (%):</label>
+      <input type="number" id="rate" name="rate" required><br><br>
+      <label for="time">Time:</label>
+      <input type="number" id="time" name="time" required><br><br>
+      <label for="investment_type">Investment Type:</label>
+      <select id="investment_type" name="investment_type" required>
+        <option value="simple_interest">Simple Interest</option>
+        <option value="compound_interest">Compound Interest</option>
+      </select><br><br>
+      <input type="submit" value="Calculate">
+    </form>
+
+  <title>Investment Result</title>
+  </head>
+  <body>
+    <h1>Investment Result</h1>
+    <p>The result is: {{ result }}</p>
+
+  </body>
+</html>
